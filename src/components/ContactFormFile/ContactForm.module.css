@@ -1,0 +1,38 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 450px;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+
+.label {
+  display: block;
+  font-weight: bold;
+}
+
+.input {
+  padding: 5px;
+  border: 1px solid #afabab;
+  border-radius: 5px;
+}
+
+.input:focus {
+  outline: 1px solid #057ef0;
+}
+
+.error {
+  color: red;
+}
+
+.button {
+  margin: 0 auto;
+  width: 100px;
+  padding: 5px;
+  border: 1px solid #888080;
+  border-radius: 5px;
+  cursor: pointer;
+}

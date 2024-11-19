@@ -1,0 +1,16 @@
+.text {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input {
+  width: 450px;
+  padding: 15px;
+  border: 1px solid #afabab;
+  border-radius: 5px;
+}
+
+.input:focus {
+  outline: 1px solid #057ef0;
+}
