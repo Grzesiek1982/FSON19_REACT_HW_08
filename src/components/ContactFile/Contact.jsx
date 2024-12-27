@@ -2,7 +2,7 @@ import styles from "./Contact.module.css";
 import { ImPhone } from "react-icons/im";
 import { RiContactsFill } from "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsSlice";
+import { deleteContact } from "../../redux/contactsOps";
 
 const Contact = ({ contact }) => {
   const dispatch = useDispatch();
@@ -16,14 +16,14 @@ const Contact = ({ contact }) => {
         </p>
         <p>
           <ImPhone className={styles.ico} />
-          {contact.number}
+          {contact.phone}
         </p>
       </div>
       <button
         className={styles.deleteBtn}
         onClick={() => dispatch(deleteContact(contact.id))}
       >
-        Usuń
+        Delete
       </button>
     </div>
   );

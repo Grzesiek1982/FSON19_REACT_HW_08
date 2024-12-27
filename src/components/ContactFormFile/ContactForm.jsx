@@ -4,7 +4,8 @@ import * as Yup from "yup";
 import MaskedInput from "react-text-mask";
 import styles from "./ContactForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addContact, selectContacts } from "../../redux/contactsSlice";
+import { selectContacts } from "../../redux/contactsSlice";
+import { addContact } from "../../redux/contactsOps";
 
 const FeedBackSchema = Yup.object().shape({
   name: Yup.string()
@@ -85,9 +86,9 @@ const ContactForm = () => {
               placeholder="Wpisz imię i nazwisko"
             />
             <ErrorMessage
+              className={styles.error}
               name="name"
               component="span"
-              className={styles.error}
             />
             <label className={styles.label} htmlFor="number">
               Wpisz numer telefonu
@@ -103,9 +104,9 @@ const ContactForm = () => {
               )}
             </Field>
             <ErrorMessage
+              className={styles.error}
               name="number"
               component="span"
-              className={styles.error}
             />
             <button className={styles.button} type="submit">
               Dodaj kontakt
