@@ -4,8 +4,9 @@ import * as Yup from "yup";
 import MaskedInput from "react-text-mask";
 import styles from "./ContactForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { selectContacts } from "../../redux/contactsSlice";
-import { addContact } from "../../redux/contactsOps";
+import { selectContacts } from "../../redux/contacts/selectors";
+import { addContact } from "../../redux/contacts/operations";
+import toast from "react-hot-toast";
 
 const FeedBackSchema = Yup.object().shape({
   name: Yup.string()
@@ -31,7 +32,8 @@ const FeedBackSchema = Yup.object().shape({
 const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
-  console.log("Contacts in contact form:", contacts);
+  console.log("Kontakty w formularzu kontaktowym:", contacts);
+  const notify = () => toast("Kontakt dodany!");
 
   const initialValues = {
     name: "",
@@ -55,6 +57,7 @@ const ContactForm = () => {
 
     dispatch(addContact(newContact));
     actions.resetForm();
+    notify();
   };
 
   return (
@@ -93,7 +96,7 @@ const ContactForm = () => {
             <label className={styles.label} htmlFor="number">
               Wpisz numer telefonu
             </label>
-            <Field className={styles.input} name="number">
+            <Field name="number">
               {({ field }) => (
                 <MaskedInput
                   {...field}

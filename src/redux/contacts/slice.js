@@ -1,11 +1,19 @@
-import { createSelector, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, deleteContact } from "./contactsOps";
-import { selectNameFilter } from "./filtersSlice";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  editingContact,
+} from "./operations";
+import { logout } from "../auth/operations";
 
 const initialState = {
   items: [],
   loading: false,
   error: null,
+  editIsOpen: false,
+  editContact: null,
+  editOnConfirm: null,
 };
 
 console.log("InitialState in contactSlice:", initialState);
@@ -13,6 +21,19 @@ console.log("InitialState in contactSlice:", initialState);
 const slice = createSlice({
   name: "contacts",
   initialState,
+  reducers: {
+    openEditModal: (state, action) => {
+      console.log(action.payload, "EDIT ACTION");
+      state.editIsOpen = true;
+      state.editContact = action.payload;
+      state.editOnConfirm = true;
+    },
+    closeEditModal: (state) => {
+      state.editIsOpen = false;
+      state.editContact = initialState.contact;
+      state.editOnConfirm = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchContacts.fulfilled, (state, action) => {
@@ -25,6 +46,15 @@ const slice = createSlice({
         console.log("ID to delete:", payload);
         state.items = state.items.filter((item) => item.id !== payload);
       })
+      .addCase(editingContact.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+      })
+      .addCase(logout.fulfilled, () => initialState)
       .addMatcher(
         isAnyOf(
           fetchContacts.pending,
@@ -60,13 +90,5 @@ const slice = createSlice({
   },
 });
 
-export const selectContacts = (state) => state.contacts.items;
 export const contactsReducer = slice.reducer;
-export const selectFilteredContacts = createSelector(
-  [selectContacts, selectNameFilter],
-  (contacts, nameFilter) => {
-    return contacts.filter((item) =>
-      item.name.toLowerCase().includes(nameFilter.toLowerCase())
-    );
-  }
-);
+export const { openEditModal, closeEditModal } = slice.actions;

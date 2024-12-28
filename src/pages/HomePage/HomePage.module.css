@@ -1,0 +1,8 @@
+.textWraper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 80%;
+  align-items: center;
+  margin: auto;
+}
